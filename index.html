@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Francisco Javier Mendoza · Desarrollo web</title>
+<meta name="description" content="Francisco Javier Mendoza Radillo, estudiante de Ingeniería en Sistemas Computacionales. Catálogos digitales, páginas web, APIs y automatizaciones con IA.">
+<meta property="og:title" content="Francisco Javier Mendoza · Desarrollo web">
+<meta property="og:description" content="Catálogos digitales con pedidos por WhatsApp, páginas web, APIs y automatizaciones con IA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF1EC; --surface:#FFFFFF; --ink:#16211A; --muted:#55645A;
+    --line:#C9D2C9; --pine:#1F5C45; --pine-ink:#FFFFFF; --marigold:#E3A61B;
+    --tag:#E1E8E1;
+    --display:"Bricolage Grotesque", system-ui, sans-serif;
+    --body:"Public Sans", system-ui, sans-serif;
+    --max:1120px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111813; --surface:#18221B; --ink:#E6ECE7; --muted:#9DAEA2;
+      --line:#2C3A30; --pine:#6CC39A; --pine-ink:#0E1A13; --marigold:#F0BE4A; --tag:#203026;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111813; --surface:#18221B; --ink:#E6ECE7; --muted:#9DAEA2;
+    --line:#2C3A30; --pine:#6CC39A; --pine-ink:#0E1A13; --marigold:#F0BE4A; --tag:#203026;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--marigold);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  h1,h2,h3{font-family:var(--display);line-height:1.08;margin:0;letter-spacing:-.01em}
+
+  /* nav */
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+  .brand{font-family:var(--display);font-weight:800;font-size:1.25rem;text-decoration:none}
+  .brand span{color:var(--pine)}
+  .nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:.95rem}
+  .nav ul a{text-decoration:none;color:var(--muted)}
+  .nav ul a:hover{color:var(--ink)}
+  @media (max-width:640px){.nav ul{display:none}}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:40px 0 80px}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800}
+  .hero .lead{font-size:1.2rem;color:var(--muted);max-width:34ch;margin:22px 0 30px}
+  .actions{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--pine);font-size:1rem}
+  .btn.solid{background:var(--pine);color:var(--pine-ink)}
+  .btn.ghost{color:var(--pine)}
+  .btn:hover{filter:brightness(1.08)}
+  .where{margin-top:34px;font-size:.95rem;color:var(--muted)}
+
+  /* phone with live demo */
+  .phone-col{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .phone{width:min(330px,100%);aspect-ratio:9/18.5;border-radius:42px;background:var(--ink);padding:12px;box-shadow:0 30px 60px -30px rgba(22,33,26,.55);position:relative}
+  .phone::before{content:"";position:absolute;top:20px;left:50%;transform:translateX(-50%);width:80px;height:20px;border-radius:12px;background:var(--ink);z-index:2}
+  .phone iframe{width:100%;height:100%;border:0;border-radius:31px;background:#fff;display:block}
+  .phone-note{font-size:.92rem;color:var(--muted);text-align:center;max-width:30ch}
+  .phone-note strong{color:var(--ink)}
+  .phone-note::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--marigold);margin-right:8px;vertical-align:1px}
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;gap:44px;padding-bottom:60px}
+    .phone{width:min(290px,100%)}
+  }
+
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  .sec-head{display:grid;grid-template-columns:1fr 2fr;gap:40px;margin-bottom:40px}
+  .sec-head h2{font-size:clamp(1.9rem,3.6vw,2.6rem);font-weight:700}
+  .sec-head p{margin:0;color:var(--muted);max-width:56ch}
+  @media (max-width:760px){.sec-head{grid-template-columns:1fr;gap:12px}}
+
+  /* services */
+  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .service h3{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+  .service p{margin:0;color:var(--muted)}
+  .service{padding-top:18px;border-top:4px solid var(--pine)}
+  @media (max-width:760px){.services{grid-template-columns:1fr}}
+
+  /* projects */
+  .featured{display:grid;gap:22px;margin-bottom:22px}
+  .proj{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px}
+  .proj.big{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:start}
+  .proj h3{font-size:1.55rem;font-weight:700;margin-bottom:10px}
+  .proj p{margin:0 0 14px;color:var(--muted)}
+  .proj .facts{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:.98rem}
+  .proj .facts li{padding-left:18px;position:relative}
+  .proj .facts li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--marigold)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px;padding:0;list-style:none}
+  .tags li{background:var(--tag);border-radius:6px;padding:3px 9px;font-size:.84rem;font-weight:600}
+  .links{display:flex;flex-wrap:wrap;gap:16px;font-weight:600}
+  .links a{color:var(--pine);text-underline-offset:4px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+  .grid .proj{border-radius:16px;padding:24px;display:flex;flex-direction:column}
+  .grid .proj h3{font-size:1.25rem}
+  .grid .proj .tags{margin-top:auto}
+  @media (max-width:760px){.proj.big{grid-template-columns:1fr}}
+
+  /* awards */
+  .awards{list-style:none;margin:0;padding:0;display:grid;gap:0}
+  .awards li{display:grid;grid-template-columns:120px 1fr;gap:24px;padding:24px 0;border-bottom:1px solid var(--line)}
+  .awards li:first-child{padding-top:0}
+  .year{font-family:var(--display);font-size:2.2rem;font-weight:800;color:var(--pine);line-height:1}
+  .awards h3{font-size:1.3rem;font-weight:700;margin-bottom:6px}
+  .awards p{margin:0;color:var(--muted)}
+  @media (max-width:560px){.awards li{grid-template-columns:1fr;gap:6px}}
+
+  /* about + contact */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  .about p{margin:0 0 14px;max-width:60ch}
+  .stack{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:18px 0 0}
+  .stack li{border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:.92rem}
+  .contact{background:var(--pine);color:var(--pine-ink);border-radius:26px;padding:36px}
+  .contact h2{font-size:2.2rem;font-weight:800;margin-bottom:12px}
+  .contact p{opacity:.9;margin:0 0 24px}
+  .contact .btn{border-color:var(--pine-ink);background:var(--pine-ink);color:var(--pine)}
+  .contact .btn.ghost{background:transparent;color:var(--pine-ink)}
+  @media (max-width:860px){.about{grid-template-columns:1fr}}
+
+  footer{padding:36px 0 48px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .theme-btn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 12px;font:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="wrap nav">
+  <a class="brand" href="#">xavito<span>.</span></a>
+  <nav aria-label="Secciones">
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#reconocimientos">Reconocimientos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <h1>Francisco Javier Mendoza Radillo</h1>
+      <p class="lead">Hago catálogos digitales, páginas web, APIs y automatizaciones con IA para negocios y equipos que necesitan resolver algo concreto.</p>
+      <div class="actions">
+        <a class="btn solid" href="#proyectos">Ver proyectos</a>
+        <a class="btn ghost" href="mailto:ramejafra@gmail.com">Escríbeme</a>
+      </div>
+      <p class="where">Estudiante de Ingeniería en Sistemas Computacionales en el ITS Coalcomán (TecNM), Michoacán. Trabajo en remoto.</p>
+    </div>
+    <div class="phone-col">
+      <div class="phone">
+        <iframe src="https://ramejafra.github.io/catalogo-whatsapp/taqueria.html" title="Demo en vivo del catálogo de una taquería" loading="lazy"></iframe>
+      </div>
+      <p class="phone-note"><strong>Pruébalo aquí mismo:</strong> es la demo real de un catálogo con pedido por WhatsApp.</p>
+    </div>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Lo que puedo hacer por tu negocio</h2>
+        <p>Proyectos chicos, entregados rápido y que tú puedes manejar sin depender de mí.</p>
+      </div>
+      <div class="services">
+        <div class="service">
+          <h3>Catálogo con pedidos por WhatsApp</h3>
+          <p>Tus clientes ven tus productos desde el celular, arman su pedido y te llega listo a tu WhatsApp. Incluye código QR para tu local.</p>
+        </div>
+        <div class="service">
+          <h3>Página web para tu negocio</h3>
+          <p>Una página clara con tus servicios, horarios, ubicación y botón de contacto, publicada y lista para compartir.</p>
+        </div>
+        <div class="service">
+          <h3>Automatizaciones y reportes</h3>
+          <p>Reportes de ventas en Excel y PDF, control de inventario o herramientas con IA que te ahorran trabajo repetitivo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Proyectos</h2>
+        <p>Cada uno tiene su código abierto en GitHub con README, licencia y pruebas. Los que corren en el navegador tienen demo en vivo.</p>
+      </div>
+
+      <div class="featured">
+        <article class="proj big">
+          <div>
+            <h3>Catálogo digital con pedidos por WhatsApp</h3>
+            <p>Tres catálogos listos para distintos giros: taquería, tienda y barbería. El cliente agrega productos al carrito y el pedido sale formateado hacia el WhatsApp del negocio.</p>
+            <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+            <div class="links">
+              <a href="https://ramejafra.github.io/catalogo-whatsapp/">Ver demo</a>
+              <a href="https://github.com/ramejafra/catalogo-whatsapp">Ver código</a>
+            </div>
+          </div>
+          <ul class="facts">
+            <li>Carrito, checkout y mensaje de pedido armado automáticamente</li>
+            <li>Sin servidor ni dependencias: se publica gratis</li>
+            <li>Diseño pensado para celular</li>
+          </ul>
+        </article>
+
+        <article class="proj big">
+          <div>
+            <h3>Tasks API</h3>
+            <p>API REST de gestión de tareas con registro, inicio de sesión con JWT, filtros y paginación. Cada usuario solo ve sus propias tareas.</p>
+            <ul class="tags"><li>Python</li><li>FastAPI</li><li>SQLModel</li><li>JWT</li><li>Docker</li><li>pytest</li></ul>
+            <div class="links">
+              <a href="https://github.com/ramejafra/tasks-api-fastapi">Ver código</a>
+            </div>
+          </div>
+          <ul class="facts">
+            <li>21 pruebas automáticas de extremo a extremo</li>
+            <li>Integración continua con GitHub Actions</li>
+            <li>Lista para contenedor con Dockerfile</li>
+          </ul>
+        </article>
+
+        <article class="proj big">
+          <div>
+            <h3>Dashboard de ventas</h3>
+            <p>Panel interactivo con indicadores en vivo, cuatro gráficas, búsqueda instantánea, filtros y tabla detallada.</p>
+            <ul class="tags"><li>React</li><li>TypeScript</li><li>Vite</li><li>Recharts</li></ul>
+            <div class="links">
+              <a href="https://ramejafra.github.io/sales-dashboard-web/">Ver demo</a>
+              <a href="https://github.com/ramejafra/sales-dashboard-web">Ver código</a>
+            </div>
+          </div>
+          <ul class="facts">
+            <li>TypeScript en modo estricto</li>
+            <li>Usa el mismo conjunto de datos validado por el reporteador en Python</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="grid">
+        <article class="proj">
+          <h3>Agente de estrategia para TikTok</h3>
+          <p>Ocho herramientas con Google Gemini: ganchos, guiones, hashtags, calendario de contenido y horarios de publicación.</p>
+          <ul class="tags"><li>Python</li><li>Gemini API</li><li>NiceGUI</li><li>40 pruebas</li></ul>
+          <div class="links"><a href="https://github.com/ramejafra/tiktok-strategy-agent">Ver código</a></div>
+        </article>
+        <article class="proj">
+          <h3>Asistente de documentos</h3>
+          <p>Le preguntas a tus PDF, Word o textos y responde citando el archivo y la página de donde sacó la información.</p>
+          <ul class="tags"><li>Python</li><li>RAG</li><li>FAISS</li><li>Streamlit</li></ul>
+          <div class="links"><a href="https://github.com/ramejafra/doc-assistant">Ver código</a></div>
+        </article>
+        <article class="proj">
+          <h3>Reportes de ventas automáticos</h3>
+          <p>Toma un CSV, descarta filas con errores y genera un reporte ejecutivo en Excel y PDF con gráficas.</p>
+          <ul class="tags"><li>Python</li><li>pandas</li><li>matplotlib</li><li>ReportLab</li></ul>
+          <div class="links"><a href="https://github.com/ramejafra/sales-report-automator">Ver código</a></div>
+        </article>
+        <article class="proj">
+          <h3>Inventario para negocio pequeño</h3>
+          <p>Productos, entradas y salidas, alertas de existencias bajas. No deja vender lo que no hay en stock.</p>
+          <ul class="tags"><li>JavaScript</li><li>Tailwind</li><li>localStorage</li></ul>
+          <div class="links">
+            <a href="https://ramejafra.github.io/inventario/">Ver demo</a>
+            <a href="https://github.com/ramejafra/inventario">Ver código</a>
+          </div>
+        </article>
+        <article class="proj">
+          <h3>Mesa de ayuda</h3>
+          <p>Sistema de soporte técnico: los clientes reportan problemas y los técnicos los asignan, comentan y resuelven.</p>
+          <ul class="tags"><li>JavaScript</li><li>HTML</li><li>CSS</li></ul>
+          <div class="links">
+            <a href="https://ramejafra.github.io/mesa-de-ayuda/">Ver demo</a>
+            <a href="https://github.com/ramejafra/mesa-de-ayuda">Ver código</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="reconocimientos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Reconocimientos</h2>
+        <p>Concursos de innovación y emprendimiento del Tecnológico Nacional de México.</p>
+      </div>
+      <ul class="awards">
+        <li>
+          <span class="year">2025</span>
+          <div>
+            <h3>InnovaTec, primer lugar en la etapa local</h3>
+            <p>Con IAgro, un proyecto en equipo que detecta plagas en plantas. Pasamos a la etapa regional.</p>
+          </div>
+        </li>
+        <li>
+          <span class="year">2024</span>
+          <div>
+            <h3>Talento Emprendedor, ganador de la etapa local</h3>
+            <p>Con DryGuard, un tendedero inteligente.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="wrap about">
+      <div>
+        <div class="sec-head" style="display:block;margin-bottom:18px"><h2>Sobre mí</h2></div>
+        <p>Estudio el sexto semestre de Ingeniería en Sistemas Computacionales. Me gusta construir cosas que alguien use de verdad: desde un catálogo para una taquería hasta una API con autenticación y pruebas.</p>
+        <p>También hago contenido en redes y videos con IA, así que entiendo lo que un negocio necesita para venderse en línea.</p>
+        <ul class="stack">
+          <li>Python</li><li>JavaScript</li><li>TypeScript</li><li>React</li><li>FastAPI</li><li>PHP</li><li>Firebase</li><li>SQL</li><li>Git</li><li>IA generativa</li>
+        </ul>
+      </div>
+      <div class="contact">
+        <h2>¿Tienes un proyecto?</h2>
+        <p>Cuéntame qué necesitas y te respondo con una propuesta y un precio claro.</p>
+        <div class="actions">
+          <a class="btn" href="mailto:ramejafra@gmail.com">ramejafra@gmail.com</a>
+          <a class="btn ghost" href="https://github.com/ramejafra">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Francisco Javier Mendoza Radillo</span>
+    <button class="theme-btn" type="button" id="theme">Cambiar tema</button>
+  </div>
+</footer>
+<script>
+  (function(){
+    var root=document.documentElement, key="theme";
+    try{var saved=localStorage.getItem(key); if(saved) root.setAttribute("data-theme",saved);}catch(e){}
+    document.getElementById("theme").addEventListener("click",function(){
+      var cur=root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+      var next=cur==="dark"?"light":"dark";
+      root.setAttribute("data-theme",next);
+      try{localStorage.setItem(key,next);}catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
